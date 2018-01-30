@@ -1,0 +1,10 @@
+<div id="home-page">
+
+    <div *ngFor="let task of tasks" class="card text-white bg-success mb-3">
+        <div class="card-header">{{task.title}}</div>
+        <div class="card-body">
+            <p class="card-text">{{task.description}}</p>
+        </div>
+    </div>
+
+</div>
