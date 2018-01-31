@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class ApiService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         //
     }
 
@@ -20,6 +21,33 @@ export class ApiService {
             onError(err);
         });
 
+    }
+
+    isLoggedIn(): boolean {
+
+        let status = false;
+
+        if (localStorage.getItem('token')) {
+            const token = localStorage.getItem('token').split('.');
+            if (token.length === 3) {
+                const data = JSON.parse(atob(token[1]));
+                if ((data.exp * 1000) > new Date().getTime()) {
+                    status = true;
+                } else {
+                    console.warn('jwt.token', 'token expired');
+                }
+            } else {
+                console.warn('jwt.token', 'wrong numbers of segments');
+            }
+        }
+
+        return status;
+
+    }
+
+    logout() {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
     }
 
     login(data, onSuccess, onError) {

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ApiService} from '../services/api.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -9,7 +10,12 @@ import {ApiService} from '../services/api.service';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private api: ApiService) {
+    // only for test
+    private jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+        'eyJ1c2VybmFtZSI6InBhcmlzbW8iLCJleHAiOjE1MTk3MzQ2MDAsInVzZXJfaWQiOjEsImVtYWlsIjoibWFyZWtAcGFyaXNtb3N0dWRpby5jb20ifQ.' +
+        'xMM49h22PGgEcclD_g1vZYHyWK50G581XjMBrWW4YoY';
+
+    constructor(private api: ApiService, private router: Router) {
         console.log('on constructor LoginComponent');
     }
 
@@ -19,7 +25,8 @@ export class LoginComponent implements OnInit {
 
     login(form: NgForm) {
         this.api.login(form.value, (res) => {
-            console.log(res);
+            localStorage.setItem('token', this.jwt);
+            this.router.navigate(['/home']);
         }, (err) => {
             console.log(err);
         });
