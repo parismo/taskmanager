@@ -5,6 +5,7 @@ import {HttpClient, HttpRequest} from '@angular/common/http';
 export class ApiService {
 
     constructor(private http: HttpClient) {
+        //
     }
 
     private call(url, method, data, onSuccess, onError) {
