@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     login(form: NgForm) {
         this.api.login(form.value, (res) => {
             localStorage.setItem('token', this.jwt);
-            this.router.navigate(['/home']);
+            this.router.navigate(['home']);
         }, (err) => {
             console.log(err);
         });
